@@ -5,14 +5,17 @@ import com.example.hospitalmanagement.entity.Patient;
 import com.example.hospitalmanagement.repository.PatientRepository;
 import com.example.hospitalmanagement.service.PatientService;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+@Component
 public class PatientServiceImpl implements PatientService {
-
     private PatientRepository patientRepository;
     private ModelMapper modelMapper;
-
+    @Autowired
     public PatientServiceImpl(PatientRepository patientRepository, ModelMapper modelMapper) {
         this.patientRepository = patientRepository;
         this.modelMapper = modelMapper;
@@ -26,7 +29,10 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public List<PatientDto> getAllPatients() {
-        return null;
+        List<Patient> patientList = patientRepository.findAll();
+        return patientList.stream()
+                .map(patient -> modelMapper.map(patient, PatientDto.class))
+                .collect(Collectors.toList());
     }
 
     @Override
