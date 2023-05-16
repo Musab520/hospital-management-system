@@ -18,7 +18,7 @@ import java.util.List;
 @Component
 public class PatientControllerImpl implements PatientController {
 
-    private PatientService patientService;
+    private final PatientService patientService;
     @Autowired
     public PatientControllerImpl(PatientService patientService) {
         this.patientService = patientService;
@@ -34,19 +34,22 @@ public class PatientControllerImpl implements PatientController {
     public ResponseEntity<List<PatientDto>> getAllPatients() {
         return ResponseEntity.ok().body(patientService.getAllPatients());
     }
-
+    @GetMapping("/{id}")
     @Override
-    public ResponseEntity<PatientDto> getPatient(long id) {
-        return null;
+    public ResponseEntity<PatientDto> getPatient(@PathVariable long id) {
+        return ResponseEntity.ok().body(patientService.getPatient(id));
     }
 
     @Override
-    public ResponseEntity<PatientDto> updatePatient(PatientDto patientDto, long id) {
-        return null;
+    @PutMapping("/{id}")
+    public ResponseEntity<PatientDto> updatePatient(@Valid @RequestBody PatientDto patientDto, @PathVariable long id) {
+        return ResponseEntity.ok().body(patientService.updatePatient(patientDto, id));
     }
 
     @Override
-    public ResponseEntity<String> deletePatient(long id) {
-        return null;
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletePatient(@PathVariable long id) {
+        patientService.deletePatient(id);
+        return new ResponseEntity<>("Deleted successfully.", HttpStatus.OK);
     }
 }
