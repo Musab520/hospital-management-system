@@ -5,7 +5,7 @@ import com.example.hospitalmanagement.dto.PatientDto;
 import java.util.List;
 
 public interface PatientService {
-    PatientDto createPatient(PatientDto CategoryDto);
+    PatientDto createPatient(PatientDto doctorDto);
 
     List<PatientDto> getAllPatients();
 

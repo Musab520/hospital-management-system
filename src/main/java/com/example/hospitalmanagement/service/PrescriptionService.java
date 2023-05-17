@@ -5,7 +5,7 @@ import com.example.hospitalmanagement.dto.PrescriptionDto;
 import java.util.List;
 
 public interface PrescriptionService {
-    PrescriptionDto createPrescription(PrescriptionDto CategoryDto);
+    PrescriptionDto createPrescription(PrescriptionDto doctorDto);
 
     List<PrescriptionDto> getAllPrescriptions();
 
