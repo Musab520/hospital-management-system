@@ -5,7 +5,6 @@ docker build -t hospital-rest-api .
 ```
 ### Run application using docker compose
 ```bash
-docker-compose down  # if the service already up
 docker-compose up
 ```
 
