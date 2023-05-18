@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: maria_hospital
+    environment:
+      - MYSQL_DATABASE=hospitalManagement
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - 3307:3306
+    volumes:
+      - /mariadb-hospital:/var/lib/mysql
+  app:
+    image: 'hospital-rest-api:latest'
+    container_name: rest-api
+    depends_on:
+      - mariadb
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://maria_hospital:3306/hospitalManagement?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SERVER_PORT=9090
+    ports:
+      - 9090:9090
